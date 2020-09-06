@@ -1,0 +1,103 @@
+/* Style the navbar */
+#navbar {
+  overflow: hidden;
+  background-color: #332;
+}
+
+/* Navbar links */
+#navbar a {
+  float: center;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+
+/* ============================= Menu Dropdown CSS ============================= */
+
+/* The navigation menu */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Navigation links */
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The dropdown menu */
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* dropdown button */
+.dropdown .dropdownbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* Add a red background color to navigation links on hover */
+.navbar a:hover, .dropdown:hover .dropdownbtn {
+  background-color: red;
+}
+
+/* Style the dropdown content - positioned absolute */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: red;
+  min-width: 130px;
+  z-index: 1;
+}
+
+/* Style the dropdown links */
+.dropdown-content a {
+  float: none;
+  color: white;
+    padding: 12px 16px;
+  text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Add a grey background color on hover */
+.dropdown-content a:hover {
+  background-color: #eee;
+  color: black;
+}
+
+/* When you move the mouse over the dropdown container, open the dropdown content */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
