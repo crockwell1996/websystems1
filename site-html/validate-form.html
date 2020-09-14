@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+      <title>Hello World</title>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="COP4813 Assignment 3 Form Validation">
+        <meta name="keywords" content="Form Validation, Assignment 3, rockwellwebdev">
+        <meta name="author" content="Christian Rockwell">
+        <!-- Load font awesome icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel=¨stylesheet¨ type="text/css" href="http://rockwellwebdev.com/site-css/top-dropdown-menu.css">
+        <link rel="stylesheet" href="C:/web-systems-1/site-css/form-validation.css">
+        <style>
+          /* Style the navbar */
+          #navbar {
+            overflow: hidden;
+            background-color: #332;
+          }
+    
+          /* Navbar links */
+          #navbar a {
+            float: center;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+          }
+    
+          /* Page content */
+          .content {
+            padding: 16px;
+          }
+    
+          /* The sticky class is added to the navbar with JS when it reaches its scroll position */
+          .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+          }
+    
+          /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+          .sticky + .content {
+            padding-top: 60px;
+          }
+    
+          /* ============================= Menu Dropdown CSS ============================= */
+    
+          /* The navigation menu */
+          .navbar {
+            overflow: hidden;
+            background-color: #333;
+          }
+    
+          /* Navigation links */
+          .navbar a {
+            float: left;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+          }
+    
+          /* The dropdown menu */
+          .dropdown {
+            float: left;
+            overflow: hidden;
+          }
+    
+          /* dropdown button */
+          .dropdown .dropdownbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+          }
+    
+          /* Add a red background color to navigation links on hover */
+          .navbar a:hover, .dropdown:hover .dropdownbtn {
+            background-color: red;
+          }
+    
+          /* Style the dropdown content - positioned absolute */
+          .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: red;
+            min-width: 130px;
+            z-index: 1;
+          }
+    
+          /* Style the dropdown links */
+          .dropdown-content a {
+            float: none;
+            color: white;
+              padding: 12px 16px;
+            text-decoration: none;
+              display: block;
+              text-align: left;
+          }
+    
+          /* Add a grey background color on hover */
+          .dropdown-content a:hover {
+            background-color: #eee;
+            color: black;
+          }
+    
+          /* When you move the mouse over the dropdown container, open the dropdown content */
+          .dropdown:hover .dropdown-content {
+            display: block;
+          }
+        </style>
+      </head>
+  </head>
+  <body>
+    <div id="navbar">
+      <a href="http://rockwellwebdev.com">dev.rockwellwebdev.com</a>
+    </div>
+
+    <!-- Load JS file -->
+    <script type="application/javascript" src="http://rockwellwebdev.com/site-javascript/top-dropdown-menu.js"></script>
+    <script type="application/javascript" src="http://rockwellwebdev.com/site-javascript/form-validation.js"></script>
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Assignment #3 JS - Remove when references above work -->
+    <script type="application/javascript">
+        //Assignment #3 Form Validation JS
+        $(document).ready(function() {
+            document.getElementById("confirmForm").onclick = function() {confirmForm()};
+            function confirmForm() {
+                var alertInfo = 'You cannot submit the form until making the following correction(s):\n\n';
+                var inputPattern;
+                var inputTest;
+                var fname = document.getElementById("fname").value;
+                var lname = document.getElementById("lname").value;
+                var strAddr1 = document.getElementById("strAddr1").value;
+                var strAddr2 = document.getElementById("strAddr2").value;
+                var cityAddr = document.getElementById("cityAddr").value;
+                var stateAddr = document.getElementById("stateAddr").value;
+                var zipAddr = document.getElementById("zipAddr").value;
+                var phoneNum = document.getElementById("phoneNum").value;
+                var email = document.getElementById("email").value;
+                var birthdate = document.getElementById("birthdate").value;
+                var formMessage = document.getElementById("formMessage").value;
+                var robotCheck = document.getElementById("notarobot").value;
+                
+                if (isfnameValid() && islnameValid() && isstrAddrValid() && iszipAddrValid() && 
+                    isphoneNumValid() && isemailValid() && isbirthdateValid() && isformMessageValid() &&
+                    isNotARobot()) {
+                    alert('Looks good!');
+                }
+                else {
+                    return alert(alertInfo);
+                }
+                
+                //Test validation on form fields
+                function isfnameValid() {
+                    inputPattern = /^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/;
+                    inputTest = inputPattern.test(fname);
+                    //Check if field is blank.
+                    if (fname.length == 0) {
+                        alertInfo += 'First Name cannot be blank.\n';
+                    }
+                    else if (!inputTest) {
+                        alertInfo += 'Please enter a valid name format.\n';
+                    }
+                    return inputTest;
+                }
+                function islnameValid() {
+                    inputPattern = /^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/;
+                    inputTest = inputPattern.test(lname);
+                    if (lname.length == 0) {
+                        alertInfo += 'Last Name cannot be blank.\n';
+                    }
+                    else if (!inputTest) {
+                        alertInfo += 'Please enter a valid name format.\n'
+                    }
+                    return inputTest;
+                }
+                function isstrAddrValid() {
+                    inputPattern = /^\d+\s[A-z]+\s[A-z]+/g;
+                    inputTest = inputPattern.test(strAddr1);
+                    if (strAddr1.length == 0) {
+                        alertInfo += 'Street Address 1 cannot be blank.\n';
+                    }
+                    else if (!inputTest) {
+                        alertInfo += 'Please enter a valid street address format.\n'
+                    }
+                    return inputTest;
+                }
+                function iscityAddrValid() {
+                    inputTest = (cityAddr.length > 0);
+                    if (!inputTest) {
+                        alertInfo += 'City cannot be blank';
+                    }
+                    return inputTest;
+                }
+                function iszipAddrValid() {
+                    inputPattern = /^\d{5}$|^\d{5}-\d{4}$/;
+                    inputTest = inputPattern.test(zipAddr);
+                    if (zipAddr.length == 0) {
+                        alertInfo += 'Last Name cannot be blank.\n';
+                    }
+                    else if (!inputTest) {
+                        alertInfo += 'Please enter a valid zip format.\n'
+                    }
+                    return inputTest;
+                }
+                function isphoneNumValid() {
+                    inputPattern = '';
+                    inputTest = inputPattern.test(phoneNum);
+                    if (phoneNum.length == 0) {
+                        alertInfo += 'Phone number cannot be blank.\n';
+                    }
+                    else if (phoneNum.length > 14) {
+                        alertInfo += 'Phone number cannot be longer than 10 digits.\n';
+                    }
+                    else if (!inputTest) {
+                        alertInfo += 'Please enter a phone number in a valid format.\n'
+                    }
+                    return inputTest;
+                }
+                function isemailValid() {
+                    inputPattern = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+                    inputTest = inputPattern.test(email);
+                    if (email.length == 0) {
+                        alertInfo += 'Email cannot be blank.\n';
+                    }
+                    else if (!inputTest) {
+                        alertInfo += 'Please enter email in a valid format.\n'
+                    }
+                    return inputTest;
+                }
+                function isbirthdateValid() {
+                    var today = new Date();
+                    inputTest = (birthdate <= today);
+                    if (!inputTest) {
+                        alertInfo += 'Birth Date cannot be after today.\n';
+                    }
+                    if (!birthdate.length) {
+                        alertInfo += 'Please enter a birth date.'
+                        inputTest = false;
+                    }
+                    return inputTest;
+                }
+                function isformMessageValid() {
+                    inputTest = (formMessage.length !== 0);
+                    if (!inputTest) {
+                        alertInfo += 'Message cannot be blank.\n';
+                    }
+                    return inputTest;
+                }
+                function isNotARobot() {
+                    inputTest = (robotCheck.trim().toLowerCase() == 'earth');
+                    if (!inputTest) {
+                        alertInfo += 'Robot behavior detected. Please answer question correctly.';
+                    }
+                    return inputTest;
+                }
+            }
+
+
+            //Phone number mask JQuery
+            $('#phoneNum')
+
+                .keydown(function (e) {
+                var key = e.which || e.charCode || e.keyCode || 0;
+                $phone = $(this);
+
+                // Don't let them remove the starting '('
+                if ($phone.val().length === 1 && (key === 8 || key === 46)) {
+                    $phone.val('('); 
+                    return false;
+                } 
+                // Reset if they highlight and type over first char.
+                else if ($phone.val().charAt(0) !== '(') {
+                    $phone.val('('+String.fromCharCode(e.keyCode)+''); 
+                }
+
+                // Auto-format- do not expose the mask as the user begins to type
+                if (key !== 8 && key !== 9) {
+                    if ($phone.val().length === 4) {
+                        $phone.val($phone.val() + ')');
+                    }
+                    if ($phone.val().length === 5) {
+                        $phone.val($phone.val() + ' ');
+                    }			
+                    if ($phone.val().length === 9) {
+                        $phone.val($phone.val() + '-');
+                    }
+                }
+
+                // Allow numeric (and tab, backspace, delete) keys only
+                return (key == 8 || 
+                                key == 9 ||
+                                key == 46 ||
+                                (key >= 48 && key <= 57) ||
+                                (key >= 96 && key <= 105));	
+            })
+
+                .bind('focus click', function () {
+                $phone = $(this);
+
+                if ($phone.val().length === 0) {
+                    $phone.val('(');
+                }
+                else {
+                    var val = $phone.val();
+                    $phone.val('').val(val); // Ensure cursor remains at the end
+                }
+            })
+
+                .blur(function () {
+                $phone = $(this);
+
+                if ($phone.val() === '(') {
+                    $phone.val('');
+                }
+            });
+        }
+    </script>
+
+    <!-- The navigation menu -->
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropdownbtn">DSC Courses <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-content">
+          <a href="https://daytonastate.smartcatalogiq.com/en/2020-2021/College-Catalog/Course-Descriptions/COP-Computer-Science/4000/COP4813" target="_blank">Web Systems I</a>
+          <a href="https://daytonastate.smartcatalogiq.com/2020-2021/College-Catalog/Course-Descriptions/CEN-Computer-Science/4000/CEN4801" target="_blank">Systems Integration</a>
+          <a href="https://daytonastate.smartcatalogiq.com/en/2020-2021/College-Catalog/Course-Descriptions/CNT-Computer-Networking/3000/CNT3104" target="_blank">Intro to Telecomm</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropdownbtn">Assignments <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-content">
+          <a href="http://rockwellwebdev.com/site-html/hello-world.html">Hello World</a>
+          <a href="http://rockwellwebdev.com">Full Web Site</a>
+          <a href="http://dev.rockwellwebdev.com/site-html/validate-form.html">Form Validation</a>
+          <a href="#assign">Assignment 4</a>
+          <a href="#assign">Assignment 5</a>
+          <a href="#assign">Assignment 6</a>
+          <a href="#assign">Assignment 7</a>
+          <a href="#assign">Assignment 8</a>
+          <a href="#assign">Assignment 9</a>
+          <a href="#assign">Assignment 10</a>
+          <a href="#assign">Assignment 11</a>
+          <a href="#assign">Assignment 12</a>
+          <a href="#assign">Assignment 13</a>
+          <a href="#assign">Assignment 14</a>
+          <a href="#assign">Assignment 15</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropdownbtn">Programming Sites <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-content">
+          <a href="#tbd">Coming soon!</a>
+        </div>
+      </div>
+      <a href="http://rockwellwebdev.com">About</a>
+    </div>
+    <!-- Assignment #3-->
+    <div class="form-validation">
+        <form class="form-validation-fields">
+            <!-- Full name -->
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname" placeholder="Jane"><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname" placeholder="Doe"><br>
+            <br>
+            <!-- Address -->
+            <label for="strAddr1">Street Address 1:</label><br>
+            <input type="text" id="strAddr1" name="strAddr1" placeholder="123 Main St"><br>
+            <label for="strAddr2">Street Address 2:</label><br>
+            <input type="text" id="strAddr2" name="strAddr2"><br>
+            <label for="cityAddr">City:</label><br>
+            <input type="text" id="cityAddr" name="cityAddr" placeholder="Anytown"><br>
+            <label for="stateAddr">State:</label><br>
+            <select id="stateAddr" name="stateAddr">
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+            </select><br>
+            <label for="zipAddr">Zip Code:</label><br>
+            <input type="text" id="zipAddr" name="zipAddr" placeholder="XXXXX or XXXXX-XXXX"><br>
+            <br>
+            <!-- Phone Number -->
+            <label for="phoneNum">Phone Number:</label><br>
+            <input type="tel" id="phoneNum" name="phoneNum" placeholder="(XXX) XXX-XXXX"><br>
+            <br>
+            <!-- Email Address -->
+            <label for="email">Email Address:</label><br>
+            <input type="text" id="email" name="email" placeholder="name@domain.extension"><br>
+            <br>
+            <!-- Birth Date -->
+            <label for="birthdate">Birth Date:</label><br>
+            <input type="date" id="birthdate" name="birthdate"
+                min="1900-01-01" max="2020-12-31"><br>
+            <br>
+            <!-- Free-form Text Message -->
+            <label for="formMessage">Message:</label><br>
+            <textarea id="formMessage" name="formMessage" rows="4" cols="50" placeholder="Enter anything."></textarea>
+            <br><br>
+            <!-- Confirmation -->
+            <h4>Are you a robot? Please answer the question correctly to submit.</h4>
+            <label for="notarobot">What is the 3rd planet from the sun?</label><br>
+            <input type="text" id="notarobot" name="notarobot"><br><br>
+            <button id="confirmForm" onclick="confirmForm()">Confirm</button>
+        </form>
+    </div>
+  </body>
+</html>
